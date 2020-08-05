@@ -1,0 +1,58 @@
+<?php
+/**
+ * Name: 服务提供者.
+ * User: 董坤鸿
+ * Date: 2020/06/23
+ * Time: 14:19
+ */
+
+namespace Xinmoumomo\Invoice;
+
+use Illuminate\Support\ServiceProvider;
+
+class InvoiceProvider extends ServiceProvider
+{
+    /**
+     * 指示是否推迟提供程序的加载
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
+
+    /**
+     * 引导应用程序服务
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Config path.
+        $config_path = __DIR__.'/invoice.php';
+
+        // 发布配置文件到项目的 config 目录中.
+        $this->publishes(
+            [$config_path => config_path('invoice.php')],
+            'invoice'
+        );
+    }
+
+    /**
+     * 注册应用程序服务
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // Config path.
+        $config_path = __DIR__.'/invoice.php';
+
+        // 发布配置文件到项目的 config 目录中.
+        $this->mergeConfigFrom(
+            $config_path,
+            'invoice'
+        );
+    }
+}
