@@ -1,10 +1,5 @@
 <?php
-/**
- * Name: 发票SDK.
- * User: 董坤鸿
- * Date: 2020/06/23
- * Time: 13:59
- */
+
 
 namespace Xinmoumomo\Invoice;
 

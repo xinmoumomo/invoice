@@ -1,10 +1,5 @@
 <?php
-/**
- * Name: 服务提供者.
- * User: 董坤鸿
- * Date: 2020/06/23
- * Time: 14:19
- */
+
 
 namespace Xinmoumomo\Invoice;
 

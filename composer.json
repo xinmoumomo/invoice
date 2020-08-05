@@ -20,7 +20,7 @@
     "autoload": {
         "files": [],
         "psr-4": {
-            "Buqiu\\Invoice\\": "src"
+            "Xinmoumomo\\Invoice\\": "src"
         }
     },
     "extra": {
