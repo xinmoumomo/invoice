@@ -1,12 +1,12 @@
 {
-    "name": "buqiu/invoice",
+    "name": "Xinmoumomo/invoice",
     "description": "上海航天信息电子发票对接平台",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "董坤鸿",
-            "email": "249529979@qq.com"
+            "name": "默默",
+            "email": "314557079@qq.com"
         }
     ],
     "require": {
@@ -26,7 +26,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Buqiu\\Invoice\\InvoiceProvider"
+                "Xinmoumomo\\Invoice\\InvoiceProvider"
             ]
         }
     }
