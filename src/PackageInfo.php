@@ -14,7 +14,6 @@ class PackageInfo
         self::$config = $config;
     }
 
-
     /***
      * @param $interface
      * @return string
