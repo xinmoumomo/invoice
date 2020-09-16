@@ -230,4 +230,30 @@ class InvoiceSDK
 
         return $return;
     }
+    
+        /**
+     * 发票剩余数量
+     *
+     * @return mixed
+     */
+    public function getInvoiceNumber()
+    {
+        $content = $this->packageInfo->getInvoiceNumber();
+        $xml = $this->packageInfo->getXml(self::INVOICENUMBER, $content);
+
+        $response = $this->postCurl(self::$host, $xml);
+        $return = simplexml_load_string($response);
+
+        $res['code'] = (string)$return->returnStateInfo->returnCode[0];
+        $res['mssage'] = base64_decode($return->returnStateInfo->returnMessage[0]);
+        if ($return->returnStateInfo->returnCode[0] == '0000') {
+            $content = base64_decode($return->Data->content[0]);
+            $rs = openssl_decrypt($content, "des-ede3", str_pad(self::$key, 24, '0'), 1);
+            $data = strip_tags(trim($rs));
+            $res['number'] = (int)trim(explode(' ', $data)['8']);
+        } else {
+            $res['number'] = '';
+        }
+        return $res;
+    }
 }
