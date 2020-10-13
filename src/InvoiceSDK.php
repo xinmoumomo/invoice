@@ -10,6 +10,7 @@ class InvoiceSDK
     const KJFP = 'ECXML.FPKJ.BC.E_INV';
     const DOWNLOAD = 'ECXML.FPMXXZ.CX.E_INV';
     const EMAIL = 'ECXML.EMAILPHONEFPTS.TS.E.INV';
+    const INVOICENUMBER = 'ECXML.QY.KYFPSL';
 
     private static $config = [];
     private static $host = '';
@@ -61,12 +62,12 @@ class InvoiceSDK
                 $items[$key]['FPHXZ'] = 2;
                 $items[$key]['discount'] = [
                     'XMMC' => $show_name,
-                    'XMSL' => '-'.sprintf('%.8f', 1),
+                    'XMSL' => '-' . sprintf('%.8f', 1),
                     'FPHXZ' => '1',
                     'XMDJ' => sprintf('%.8f', $arr['discount']),
                     'SPBM' => $item['spbm'],
                     'ZXBM' => $item['id'],
-                    'XMJE' => '-'.sprintf('%.2f', $arr['discount']),
+                    'XMJE' => '-' . sprintf('%.2f', $arr['discount']),
                     'SL' => $item['sl'],
                     'HSBZ' => $item['hsbz'],
                 ];
@@ -126,7 +127,7 @@ class InvoiceSDK
         if (is_array($headerArr) && !empty($headerArr)) {
             $queryHeaders = array();
             foreach ($headerArr as $k => $v) {
-                $queryHeaders[] = $k.':'.$v;
+                $queryHeaders[] = $k . ':' . $v;
             }
             //print_r($queryHeaders);
             $headers = array_merge($headers, $queryHeaders);
@@ -166,7 +167,7 @@ class InvoiceSDK
     public function download(array $arr)
     {
         $len = strlen($arr['order_bn']);
-        $data['lsh'] = str_repeat('0', 20 - $len).$arr['order_bn'];
+        $data['lsh'] = str_repeat('0', 20 - $len) . $arr['order_bn'];
         $data['PDF_XZFS'] = 3;
         $data['DDH'] = $arr['order_bn'];
         $data['FPQQLSH'] = $arr['FPQQLSH'];
@@ -190,7 +191,7 @@ class InvoiceSDK
         } else {
             //状态有误
             $res['code'] = $return->returnStateInfo->returnCode[0];
-            $res['mssage'] = base64_decode($return->returnStateInfo->returnMessage[0]);
+            $res['message'] = base64_decode($return->returnStateInfo->returnMessage[0]);
 
             return $res;
         }
@@ -207,8 +208,8 @@ class InvoiceSDK
     public function email(array $arr)
     {
         $len = strlen($arr['order_bn']);
-        $data['lsh'] = str_repeat('0', 20 - $len).$arr['order_bn'];
-        $data['eamil'] = $arr['email'];
+        $data['lsh'] = str_repeat('0', 20 - $len) . $arr['order_bn'];
+        $data['email'] = $arr['email'];
         $data['fp_dm'] = $arr['fp_dm'];
         $data['fp_hm'] = $arr['fp_hm'];
         $data['FPQQLSH'] = $arr['FPQQLSH'];
@@ -230,8 +231,8 @@ class InvoiceSDK
 
         return $return;
     }
-    
-        /**
+
+    /**
      * 发票剩余数量
      *
      * @return mixed
@@ -245,7 +246,7 @@ class InvoiceSDK
         $return = simplexml_load_string($response);
 
         $res['code'] = (string)$return->returnStateInfo->returnCode[0];
-        $res['mssage'] = base64_decode($return->returnStateInfo->returnMessage[0]);
+        $res['message'] = base64_decode($return->returnStateInfo->returnMessage[0]);
         if ($return->returnStateInfo->returnCode[0] == '0000') {
             $content = base64_decode($return->Data->content[0]);
             $rs = openssl_decrypt($content, "des-ede3", str_pad(self::$key, 24, '0'), 1);

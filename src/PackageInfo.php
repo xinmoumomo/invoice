@@ -14,6 +14,7 @@ class PackageInfo
         self::$config = $config;
     }
 
+
     /***
      * @param $interface
      * @return string
@@ -206,7 +207,7 @@ ROOT;
             </COMMON_NODE>
             <COMMON_NODE>
                 <NAME>EMAIL</NAME>
-                <VALUE>{$arr['eamil']}</VALUE>
+                <VALUE>{$arr['email']}</VALUE>
             </COMMON_NODE>
             <COMMON_NODE>
                 <NAME>扩展字段名称</NAME>
@@ -530,8 +531,8 @@ ROOT;
 
         return $milliseconds;
     }
-    
-        /**
+
+    /**
      * @return false|string
      */
     public function getInvoiceNumber()
