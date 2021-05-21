@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Name: 服务提供者
+ * User: Silent
+ * Date: 2021-05-21
+ * Time: 14:18:49
+ */
 
 namespace Xinmoumomo\Invoice;
 
@@ -24,7 +30,7 @@ class InvoiceProvider extends ServiceProvider
     public function boot()
     {
         // Config path.
-        $config_path = __DIR__.'/invoice.php';
+        $config_path = __DIR__ . '/invoice.php';
 
         // 发布配置文件到项目的 config 目录中.
         $this->publishes(
@@ -42,7 +48,7 @@ class InvoiceProvider extends ServiceProvider
     public function register()
     {
         // Config path.
-        $config_path = __DIR__.'/invoice.php';
+        $config_path = __DIR__ . '/invoice.php';
 
         // 发布配置文件到项目的 config 目录中.
         $this->mergeConfigFrom(

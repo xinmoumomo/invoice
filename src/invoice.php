@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Name: 发票配置文件
+ * User: Silent
+ * Date: 2021-05-21
+ * Time: 14:17:04
+ */
+
 return [
     // 电商平台编码
     'DSPTBM' => '电商平台编码',

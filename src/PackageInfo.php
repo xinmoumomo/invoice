@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Name: 发票包信息
+ * User: Silent
+ * Date: 2021-05-21
+ * Time: 14:14:28
+ */
 
 namespace Xinmoumomo\Invoice;
 
@@ -74,8 +80,8 @@ XML;
     }
 
     /***
-     * @param array $config
-     * @param array $arr
+     * @param  array  $config
+     * @param  array  $arr
      * @return string
      */
     public function getContent(array $arr)
@@ -149,7 +155,7 @@ ROOT;
     }
 
     /***
-     * @param string $xml
+     * @param  string  $xml
      * @return mixed|\SimpleXMLElement
      */
     public function XML2array(string $xml)
@@ -186,7 +192,7 @@ ROOT;
     }
 
     /***
-     * @param array $arr
+     * @param  array  $arr
      * @return string
      */
     public function getEmail(array $arr)
@@ -333,6 +339,21 @@ ROOT;
                 'text' => '',
                 'comment' => '购货方名称',
             ],
+            'GHF_DZ' => [
+                'key' => 'GHF_DZ',
+                'text' => '',
+                'comment' => '购货方地址',
+            ],
+            'GHF_YHZH' => [
+                'key' => 'GHF_YHZH',
+                'text' => '',
+                'comment' => '购货方银行、账号',
+            ],
+            'GHF_GDDH' => [
+                'key' => 'GHF_GDDH',
+                'text' => '',
+                'comment' => '购货方固定电话',
+            ],
             'SKY' => [
                 'key' => 'SKY',
                 'text' => $config['SKY'],
@@ -378,12 +399,24 @@ ROOT;
                 'text' => '',
                 'comment' => '合计税额',
             ],
+            // 发票代码
+            'YFP_DM' => [
+                'key' => 'YFP_DM',
+                'text' => '',
+                'comment' => '原发票代码',
+            ],
+            // 发票号码
+            'YFP_HM' => [
+                'key' => 'YFP_HM',
+                'text' => '',
+                'comment' => '原发票号码',
+            ],
         ];
     }
 
 
     /***
-     * @param array $config
+     * @param  array  $config
      * @return array
      */
     private function content_1(array $config)
@@ -471,7 +504,7 @@ ROOT;
     }
 
     /***
-     * @param array $config
+     * @param  array  $config
      * @return array
      */
     private function download(array $config)
@@ -501,7 +534,7 @@ ROOT;
     }
 
     /***
-     * @param array $config
+     * @param  array  $config
      * @return array
      */
     public function email(array $config)
@@ -517,7 +550,7 @@ ROOT;
     }
 
     /**
-     * @param null $utimestamp
+     * @param  null  $utimestamp
      * @return float
      */
     private function udate($utimestamp = null)

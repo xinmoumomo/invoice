@@ -88,57 +88,69 @@ return [
 ## 用法
 
 ```
-    public static function info($order_ids, &$post_data, $no)
-    {
-        $amount = self::getInvoiceAmountByOrderId($order_ids);
-        $invoice_good_code = InvoiceGoodCode::query()->where('id', $post_data['content'])->first();
-    
-        if($invoice_good_code['preferential_policy'] == 1){
-           $yhzcbs =  $invoice_good_code['preferential_policy'];
-           $zzstsgl =  $invoice_good_code['preferential_policy_type'];
-           $lslbs =  $invoice_good_code['zero_tax_rate_sign'];
-        }else{
-            $yhzcbs =  $invoice_good_code['preferential_policy'];
-            $zzstsgl =  '';
-            $lslbs =  '';
-        }
-    
-        $arr = [
-            'invoice_type' => '01',
-            'invoice_title' => '测试发票单',
-            'items' => [
-                [
-                    'name' => $invoice_good_code['name'],  //项目名称
-                    'quantity' => '1',
-                    'price' => $amount, //项目单价
-                    'spbm' => $invoice_good_code['tax_category_code'], //商品编码 填商品名称对应的商品税收分类编码，19位不足补0
-                    'zxbm' => '',    //自行编码
-                    'id' => '',      //有折扣时自行编码取值
-                    'sl' => $invoice_good_code['tax_rate'],      //税率
-                    'hsbz' => $invoice_good_code['tax_mark'],      //含税标志
-                    'yhzcbs' => $yhzcbs,      //是否享受优惠政策
-                    'zzstsgl' => $zzstsgl,      //优惠政策类型
-                    'lslbs' => $lslbs,      //零税率标识
-                ],
-            ],
-            'discount' => '',
-            'mobile' => '021-64173538',
-            'sum' => '',   //价税合计金额
-            'order_bn' => $no,   //订单号
-            'FPQQLSH' => $no,  //请求流水号
-            'KPXM' => 'sfd', //商品信息中第一条
-            'GHFMC' => $post_data['company'], //购货方名称
-            'GHF_SJ' => $post_data['mobile'],   //购货方手机
-            'GHF_NSRSBH' => $post_data['nor_code'],   //购货方手机
-            'GHFQYLX' => '01',   //购货方企业类型
-            'KPLX' => '1',   //开票类型  1 正票 2 红票
-            'CZDM' => '10',  //操作代码
-            'HJBHSJE' => '',    //合计不含税金额
-            'HJSE' => '', //合计税额
-            'trade_no' => $no,  //请求流水号
-            'KPHJJE' => '',   //价税合计金额
-        ];
-    
-        return $arr;
-    }
+          public static function info($order_ids, &$post_data, $no)
+          {
+              return [
+                  'invoice_type'  => '01',
+                  'invoice_title' => '测试发票单',
+                  'items' => [
+                      [
+                          'name' => '治疗',  //项目名称
+                          'quantity' => '1',
+                          'price' => '100', //项目单价
+                          'spbm' => '0000101000000000000', //商品编码 填商品名称对应的商品税收分类编码，19位不足补0
+                          'zxbm' => '',    //自行编码
+                          'id' => '',      //有折扣时自行编码取值
+                          'sl' => '0.06',      //税率
+                          'hsbz' => '0',      //含税标志
+                          //是否享受优惠政策
+                          'yhzcbs' => $yhzcbs ?? "",
+                          //优惠政策类型
+                          'zzstsgl' => $zzstsgl ?? '',
+                          //零税率标识
+                          'lslbs' => $lslab ?? '',
+                      ],
+                  ],
+                  'discount' => '',
+                  'mobile'   => config('invoice')['XHF_DH'],
+                  // 价税合计金额
+                  'sum' => '',
+                  //订单号
+                  'order_bn' => $no,
+                  //请求流水号
+                  'FPQQLSH' => $no,
+                  //商品信息中第一条
+                  'KPXM' => 'sfd',
+                  //购货方名称
+                  'GHFMC' => $company,
+                  // 购货方手机
+                  'GHF_SJ' => $contact_mobile,
+                  // nor_code
+                  'GHF_NSRSBH' => $nor_code,
+                  // 购货方企业类型
+                  'GHFQYLX' => '01',
+                  // 开票类型  1 正票 2 红票
+                  'KPLX' => ($type == 'main_ticket') ? 1 : 2,
+                  // 操作代码
+                  'CZDM' => ($type == 'main_ticket') ? 10 : 20,
+                  // 合计不含税金额
+                  'HJBHSJE' => '',
+                  // 合计税额
+                  'HJSE' => '',
+                  // 请求流水号
+                  'trade_no' => $invoice->no,
+                  // 价税合计金额
+                  'KPHJJE' => '',
+                  // 购货方，银行账户
+                  'GHF_YHZH' => !empty($invoice->bank_number) ? ($invoice->bank_number)['bank_name'] . ' ' . ($invoice->bank_number)['bank_account'] : '',
+                  // 购货方 固定电话
+                  'GHF_GDDH' => !empty($invoice->address_mobile) ? ($invoice->address_mobile)['mobile'] : '',
+                  // 购货方地址
+                  'GHF_DZ' => !empty($invoice->address_mobile) ? ($invoice->address_mobile)['address'] : '',
+                  // 发票代码
+                  'YFP_DM' => $invoice->invoice_code,
+                  // 发票编号
+                  'YFP_HM' => $invoice->invoice_no,
+              ];
+          }
 ```
